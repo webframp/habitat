@@ -15,13 +15,13 @@
 use env as henv;
 
 /// Default Depot URL
-pub const DEFAULT_DEPOT_URL: &'static str = "https://willem.habitat.sh/v1/depot";
+pub const DEFAULT_DEPOT_URL: &'static str = "http://localhost:9636/v1/depot";
 
 /// Default Depot channel
 pub const DEFAULT_DEPOT_CHANNEL: &'static str = "unstable";
 
 /// Default Depot publishing
-pub const DEFAULT_DEPOT_PUBLISH: &'static str = "false";
+pub const DEFAULT_DEPOT_PUBLISH: &'static str = "true";
 
 /// Default Depot URL environment variable
 pub const DEPOT_URL_ENVVAR: &'static str = "HAB_DEPOT_URL";

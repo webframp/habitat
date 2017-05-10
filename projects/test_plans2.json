@@ -1,0 +1,8 @@
+    {
+        "origin": "core",
+        "plan_path": "testpkg2/plan.sh",
+        "github": {
+            "organization": "chefsalim",
+            "repo": "test-plans"
+        }
+    }

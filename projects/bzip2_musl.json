@@ -1,0 +1,8 @@
+    {
+        "origin": "core",
+        "plan_path": "bzip2-musl/plan.sh",
+        "github": {
+            "organization": "habitat-sh",
+            "repo": "core-plans"
+        }
+    }

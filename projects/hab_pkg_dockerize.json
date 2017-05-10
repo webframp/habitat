@@ -1,0 +1,8 @@
+    {
+        "origin": "core",
+        "plan_path": "components/pkg-dockerize/plan.sh",
+        "github": {
+            "organization": "habitat-sh",
+            "repo": "habitat"
+        }
+    }

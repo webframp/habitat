@@ -129,7 +129,7 @@ bldr-shell: build-srv ## launches a development shell with forwarded ports but d
 .PHONY: bldr-shell
 
 bldr-run: build-srv ## launches a development shell running the API
-	$(bldr_run) sh -c '$(forego) start -f support/Procfile -e support/bldr.env'
+	$(bldr_run) sh -c 'sudo $(forego) start -f support/Procfile -e support/bldr.env'
 .PHONY: bldr-run
 
 serve-docs: docs ## serves the project documentation from an HTTP server

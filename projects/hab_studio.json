@@ -1,0 +1,8 @@
+    {
+        "origin": "core",
+        "plan_path": "components/studio/plan.sh",
+        "github": {
+            "organization": "habitat-sh",
+            "repo": "habitat"
+        }
+    }

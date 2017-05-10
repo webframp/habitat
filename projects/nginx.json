@@ -1,0 +1,9 @@
+    {
+        "origin": "core",
+        "plan_path": "nginx/plan.sh",
+        "github": {
+            "organization": "habitat-sh",
+            "repo": "core-plans"
+        }
+    }
+
