@@ -307,10 +307,14 @@ fn sub_pkg_exec(m: &ArgMatches, cmd_args: Vec<OsString>) -> Result<()> {
 }
 
 fn sub_pkg_export(ui: &mut UI, m: &ArgMatches) -> Result<()> {
-    let ident = try!(PackageIdent::from_str(m.value_of("PKG_IDENT").unwrap())); // Required via clap
+    let pkg_idents = m.values_of("PKG_IDENT").unwrap(); // Required via clap
     let format = &m.value_of("FORMAT").unwrap(); // Required via clap
+    let mut idents = Vec::new();
+    for pkg_ident in pkg_idents {
+        idents.push(try!(PackageIdent::from_str(pkg_ident)));
+    }
     let export_fmt = try!(command::pkg::export::format_for(ui, &format));
-    command::pkg::export::start(ui, &ident, &export_fmt)
+    command::pkg::export::start(ui, &idents, &export_fmt)
 }
 
 fn sub_pkg_hash(m: &ArgMatches) -> Result<()> {

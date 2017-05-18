@@ -207,7 +207,7 @@ pub fn studio_run(cmd: &str, args: &[&str]) -> CmdResult<Cmd> {
     spawn(command)
 }
 
-pub fn dockerize(ident_str: &str) {
+pub fn dockerize(ident_str: &[&str]) {
     let mut install = match studio_run("hab", &["install", "core/hab-pkg-dockerize"]) {
         Ok(cmd) => cmd,
         Err(e) => panic!("{:?}", e),

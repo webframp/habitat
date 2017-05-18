@@ -34,8 +34,8 @@ impl ExportFormat {
     }
 }
 
-pub fn start(ui: &mut UI, ident: &PackageIdent, format: &ExportFormat) -> Result<()> {
-    inner::start(ui, ident, format)
+pub fn start(ui: &mut UI, idents: Vec<PackageIdent>, format: &ExportFormat) -> Result<()> {
+    inner::start(ui, idents, format)
 }
 
 pub fn format_for(ui: &mut UI, value: &str) -> Result<ExportFormat> {
@@ -93,7 +93,7 @@ mod inner {
         }
     }
 
-    pub fn start(ui: &mut UI, ident: &PackageIdent, format: &ExportFormat) -> Result<()> {
+    pub fn start(ui: &mut UI, idents: &Vec<PackageIdent>, format: &ExportFormat) -> Result<()> {
         let format_ident = format.pkg_ident();
         match PackageInstall::load(format.pkg_ident(), None) {
             Ok(_) => {}
@@ -109,8 +109,11 @@ mod inner {
                                     false));
             }
         }
-        let pkg_arg = OsString::from(&ident.to_string());
-        exec::start(&format_ident, &format.cmd(), vec![pkg_arg])
+        let pkg_arg = Vec::new();
+        for ident in idents {
+            pkg_arg.push(OsString::from(ident.to_string()));
+        }
+        exec::start(&format_ident, &format.cmd(), pkg_arg)
     }
 }
 

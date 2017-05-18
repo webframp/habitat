@@ -128,16 +128,17 @@ docker_image() {
   local pkg_name=$(package_name_for $1)
   local version_tag=$(package_version_tag $1)
   local latest_tag=$(package_latest_tag $1)
-  echo "$1" > $DOCKER_CONTEXT/rootfs/.hab_pkg
+  printf "%s\n" "${PKGS[@]}" > $DOCKER_CONTEXT/rootfs/.hab_pkg
   cat <<EOT > $DOCKER_CONTEXT/Dockerfile
 FROM scratch
 ENV $(cat $DOCKER_CONTEXT/rootfs/init.sh | grep PATH= | cut -d' ' -f2-)
 WORKDIR /
 ADD rootfs /
 VOLUME $HAB_ROOT_PATH/svc/${pkg_name}/data $HAB_ROOT_PATH/svc/${pkg_name}/config
-EXPOSE 9631 $(package_exposes $1)
+EXPOSE 9631 $(package_exposes ${PKGS[@]})
+$(printf "RUN hab sup load %s" ${PKGS[@]})
 ENTRYPOINT ["/init.sh"]
-CMD ["start", "$1"]
+CMD ["sup", "run"]
 EOT
   docker build --force-rm --no-cache -t $version_tag .
   docker tag $version_tag $latest_tag
