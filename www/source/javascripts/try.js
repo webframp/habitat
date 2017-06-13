@@ -116,12 +116,12 @@ $("#mobile-keyboard-trigger").click(function() {
          exec: function(cmd, args, callback) {
      
             if (args.join(" ") === "http://172.17.0.2:9631/services/postgresql/default/health") {
-               getExample("hab-health-check-postgres", callback);
+               getExample("curl-health-check-postgres", callback);
 
                   if (step === 6) { success(); }
                 
-            } else if (args.join(" ") === "http://172.17.0.2:9631/services/myrubyapp/default/health"){
-               getExample("hab-health-check-ruby", callback);
+            } else if (args.join(" ") === "http://172.17.0.3:9631/services/myrubyapp/default/health"){
+               getExample("curl-health-check-ruby", callback);
              
                   if (step === 6) { success(); }
 
@@ -129,8 +129,8 @@ $("#mobile-keyboard-trigger").click(function() {
                   getResponse("hab-sup-config-help").then(function (txt) {
                       callback(format(txt));
                   });
-            }
-            
+            } 
+         }       
     });
 
     // hab commands

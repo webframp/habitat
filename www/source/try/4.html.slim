@@ -7,12 +7,15 @@ total_steps: 6
 h2.page-body--title Setting Up a Service Group Topology
 
 p
-  | Suppose your application needs to share state and requires a certain start
-    order for its services. In this situation, Habitat has built-in support for 
-    a leader/follower topology that any service or application can use.
-    
-    Restart your PostgreSQL service, but this time add a <code>-t leader</code> flag
-    to the <code>hab start</code> command.
+  | By default, Habitat places running services into a service group with a standalone 
+    topology; however, Habitat also has built-in support for a leader-follower topology 
+    that any application can use. This support includes performing leader election and 
+    sharing those results with the rest of the services in the ring.
+  
+p 
+  | Suppose you want to run several instances of our PostgreSQL database for high availability. 
+    Start off by simply restarting your PostgreSQL service, but this time add a 
+    <code>-t leader</code> flag to the <code>hab start</code> command.
 
 code
   | hab start core/postgresql -t leader
@@ -22,8 +25,9 @@ code
 
 #success
   p 
-    | As you can see by the output, in a leader/follower topology, a minimum of three nodes must be brought up to achieve quorum.
-      We'll show how to bring up the next two and see how that changes the output of the node in the next step.
+    | As you can see by the output, in a leader-follower topology, a minimum of three 
+      services must be brought up to achieve quorum. We'll show how to bring up the next 
+      two and see how that changes the output of this first service in the next step.
 
   = partial "partials/advance_button" do
     | Next - Adding Services to an Existing Group

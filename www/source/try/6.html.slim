@@ -7,10 +7,9 @@ total_steps: 6
 h2.page-body--title Checking the Health of your Service
 
 p
-  | Habitat provides a consistent interface for retrieving the status of your running services from the command line 
-    and through an HTTP API that you can call when directly connecting to a service instance.
+  | Habitat provides a consistent interface for retrieving the status of your running services.
    
-    You can query the status of all services currently loaded or running under the local supervisor using the 
+    You can query the status of all services currently loaded or running under the supervisor using the 
     <code>hab sup status</code> command. This command will list all persistent services loaded by the 
     supervisor along with their current state. It will also list transient services that are currently 
     running or in a starting or restarting state. 
@@ -28,21 +27,27 @@ code
 
 p
   | In addition to retrieving general status information about a service, the supervisor also exposes 
-    the status of its services' health and other information through an HTTP API endpoint. This information 
-    can be useful in monitoring service health, results of leader elections, and so on. 
+    service health, leader election results, census information, and other data through an HTTP API endpoint.     
     
 p
   | In our example, you will use <code>curl</code> to connect to the supervisor of either running 
-    service using the following syntax. Again, 
+    service and query for the health of the service. This health check is user-defined in the plan, 
+    and can be used to define basic smoke tests, such as checking whether your webapp is available
+    for requests. 
+
+p 
+  | To see the default health check response, enter the following for the running postgresql service:
 
 code 
   | curl http://172.17.0.2:9631/services/postgresql/default/health
 
 p 
-  | To retrieve the health status of the Ruby-on-Rails running service, enter the following:
+  | To the results of a basic availability test for the Ruby-on-Rails application, enter the following:
 
 code
   | curl http://172.17.0.3:9631/services/myrubyapp/default/health
+
+    This health check is available by default when using the ruby scaffolding to create your package.
 
 = partial "partials/terminal" do
 

@@ -14,28 +14,28 @@ p
 
 p 
   | When supervisors are connected in this way, they start sharing information amongst themselves,
-    such as membership metadata and configuration settings. Having your applications automatically discover 
-    dependent services and configure themselves accordingly is useful if you have ever had to setup
-    connection information between tiers in a web application. Habitat does this by sharing any exposed
-    configuration values with other members of the ring.
+    such as membership metadata and configuration settings. Configuration values are explicitly exported, so each
+    service in your application has control over what configuration data gets exposed to other services. Once those values are available to the other services, they can automatically bind to those values. Having your applications automatically discover dependent services and configure themselves accordingly is useful if you have ever had to setup
+    connection information between tiers in a web application.
 
 p
   | In our example, the PostgreSQL database service exposes a port number that the Ruby-on-Rails web application
     needs in order to connect to the database. To set up databinding between the Ruby-on-Rails frontend and 
     the PostgreSQL backend, you will restart the rails app, but this time specifying the IP address of the 
-    supervisor managing the backend and setting the <code>bind</code> argument to the service group name of the database. 
+    supervisor managing the backend and setting the <code>bind</code> argument to the <a href=#quickref_sg>service group</a> name of the database. 
     This will allow you your Ruby-on-Rails app to use that port number when it initializes itself and tries to 
     connect to the database.
 
 code
   | hab start example/myrubyapp --peer 172.17.0.2 --bind database:postgresql.default
 
-p    
-  | What's a service group? Within a ring, services of the same type can form groups. This is useful 
-    when new configuration data and files must be shared with all members of a given type who are in 
-    a particular group. And to join the ring, you must specify the IP address of one other supervisor 
-    within the ring; however that peer does <b>not</b> have to be in the same service group. This is how you can 
-    have services of different types pass around their configuration values. 
+#quickref_sg
+  p   
+    | What's a service group? Within a ring, services of the same type can form groups. This is useful 
+      when new configuration data and files must be shared with all members of a given type who are in 
+      a particular group. And to join the ring, you must specify the IP address of one other supervisor 
+      within the ring; however that peer does <b>not</b> have to be in the same service group. This is how you can 
+      have services of different types pass around their configuration values. 
 
 #window-node-1.window-node
   = partial "partials/terminal" do
