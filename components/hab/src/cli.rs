@@ -75,6 +75,18 @@ pub fn get() -> App<'static, 'static> {
                     "Ring key name, which will encrypt communication messages")
             )
         )
+        (@subcommand job =>
+            (about: "Commands relating to job control")
+            (aliases: &["j", "jo"])
+            (@setting ArgRequiredElseHelp)
+            (@subcommand start =>
+                (about: "Schedule a job or group of jobs.")
+                (aliases: &["s", "st", "sta", "star"])
+                (@arg IDENT: +required {valid_partial_ident}
+                    "The origin and name of the package to schedule a job for \
+                    (ex: core/redis)")
+            )
+        )
         (@subcommand origin =>
             (about: "Commands relating to Habitat origin keys")
             (aliases: &["o", "or", "ori", "orig", "origi"])
@@ -546,6 +558,18 @@ fn file_exists(val: String) -> result::Result<(), String> {
 
 fn file_exists_or_stdin(val: String) -> result::Result<(), String> {
     if val == "-" { Ok(()) } else { file_exists(val) }
+}
+
+fn valid_partial_ident(val: String) -> result::Result<(), String> {
+    let regex = Regex::new(
+        r"^([A-Za-z_0-9]+)/([A-Za-z_0-9]+)(/([A-Za-z_0-9\.]+))?(/([0-9]+))?$",
+    ).unwrap();
+
+    if regex.is_match(&val) {
+        Ok(())
+    } else {
+        Err(format!("IDENT: '{}' is invalid", &val))
+    }
 }
 
 fn valid_pair_type(val: String) -> result::Result<(), String> {

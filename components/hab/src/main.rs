@@ -112,6 +112,12 @@ fn start(ui: &mut UI) -> Result<()> {
                 _ => unreachable!(),
             }
         }
+        ("job", Some(matches)) => {
+            match matches.subcommand() {
+                ("start", Some(m)) => sub_job_start(ui, m)?,
+                _ => unreachable!(),
+            }
+        }
         ("pkg", Some(matches)) => {
             match matches.subcommand() {
                 ("binlink", Some(m)) => sub_pkg_binlink(ui, m)?,
@@ -347,6 +353,12 @@ fn sub_pkg_hash(m: &ArgMatches) -> Result<()> {
             Ok(())
         }
     }
+}
+
+fn sub_job_start(ui: &mut UI, m: &ArgMatches) -> Result<()> {
+    let ident = m.value_of("IDENT").unwrap().into();
+    command::job::start::start(ui, ident)?;
+    Ok(())
 }
 
 fn sub_plan_init(ui: &mut UI, m: &ArgMatches) -> Result<()> {
